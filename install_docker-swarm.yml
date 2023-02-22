@@ -49,5 +49,5 @@
       when: "'swarm_manager' not in group_names"
 
     - name: Join node to Swarm as worker
-      command: "{{ hostvars[groups['swarm_managers'][0]]['manager_join_command'] }}"
-      when: "'swarm_manager' not in group_names"
+      command: "{{ hostvars[groups['swarm_workers'][0]]['worker_join_command'] }}"
+      when: "'swarm_worker' not in group_names"

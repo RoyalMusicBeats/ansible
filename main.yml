@@ -1,0 +1,9 @@
+---
+- name: Main playbook
+  hosts: all
+  tasks:
+    - name: Installs and joins docker swarm nodes
+      include_tasks: install_docker-swarm.yml
+#      vars:
+#        var1: value1
+#        var2: value2
