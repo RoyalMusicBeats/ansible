@@ -2,8 +2,11 @@
 - name: Main playbook
   hosts: all
   tasks:
-    - name: Installs and joins docker swarm nodes
-      include_tasks: install_docker-swarm.yml
+    - name: Installs docker
+      include_tasks: install_docker.yml
+
+    - name: runs radarr container
+      include_tasks: container_radarr.yml
 #      vars:
 #        var1: value1
 #        var2: value2
