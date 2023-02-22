@@ -1,54 +1,53 @@
 ---
-- name: Install Docker Swarm
+- name: Install Docker and Docker Swarm
   hosts: all
   become: true
   tasks:
+    - name: Install prerequisites
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg2
+          - software-properties-common
+
     - name: Add Docker GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker APT repository
+    - name: Add Docker repository
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
         state: present
 
-    - name: Update apt cache
-      apt:
-        update_cache: true
-
-    - name: Install Docker
+    - name: Install Docker CE
       apt:
         name: docker-ce
         state: present
 
-    - name: Start Docker service
-      systemd:
-        name: docker
-        state: started
-        enabled: true
+    - name: Initialize Docker Swarm
+      command: docker swarm init --advertise-addr {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+      register: swarm_init
+      when: "'swarm_manager' in group_names"
+
+    - name: Save manager join command
+      set_fact:
+        manager_join_command: "{{ swarm_init.stdout_lines[0] }}"
+      when: "'swarm_manager' in group_names"
 
 - name: Join nodes to Docker Swarm
-  hosts: swarm
+  hosts: swarm_nodes
   become: true
-  vars:
-    swarm_token: "{{ hostvars[groups['swarm_manager'][0]]['swarm_token'] }}"
-    swarm_ip: "{{ hostvars[groups['swarm_manager'][0]]['ansible_host'] }}"
   tasks:
-    - name: Join worker nodes to Docker Swarm
-      shell: docker swarm join --token {{ swarm_token }} {{ swarm_ip }}:2377
-      when: "'swarm_worker' in group_names"
+    - name: Join node to Swarm as manager
+      command: "{{ hostvars[groups['swarm_managers'][0]]['manager_join_command'] }}"
+      when: "'swarm_manager' not in group_names"
 
-    - name: Initialize manager node for Docker Swarm
-      shell: docker swarm init --advertise-addr {{ swarm_ip }}
-      when: "'swarm_manager' in group_names"
-      register: swarm_init
-
-    - name: Save Docker Swarm join token
-      set_fact:
-        swarm_token: "{{ swarm_init.stdout_lines[-2] }}"
-
-    - name: Save Docker Swarm manager IP address
-      set_fact:
-        swarm_ip: "{{ ansible_host }}"
-      when: "'swarm_manager' in group_names"
+    - name: Join node to Swarm as worker
+      command: "{{ hostvars[groups['swarm_managers'][0]]['manager_join_command'] }}"
+      when: "'swarm_manager' not in group_names"

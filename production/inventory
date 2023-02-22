@@ -1,6 +1,6 @@
-[web_servers]
+[swarm_managers]
 192.0.2.10 ansible_user=user ansible_password=password
 192.0.2.11 ansible_user=user ansible_password=password
 
-[database_servers]
+[swarm_nodes]
 192.0.2.12 ansible_user=user ansible_password=password
