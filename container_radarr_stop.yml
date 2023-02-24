@@ -1,0 +1,19 @@
+---
+- name: Remove Radarr container and image
+  hosts: all
+  become: true
+  tasks:
+    - name: Stop Radarr container
+      docker_container:
+        name: radarr
+        state: stopped
+
+    - name: Remove Radarr container
+      docker_container:
+        name: radarr
+        state: absent
+
+    - name: Remove Radarr image
+      docker_image:
+        name: linuxserver/radarr
+        state: absent
