@@ -1,12 +1,12 @@
 ---
-- name: Main playbook
+- name: Run multiple playbooks
   hosts: all
-  tasks:
-    - name: Installs docker
-      include_tasks: install_docker.yml
 
-    - name: runs radarr container
-      include_tasks: container_radarr.yml
-#      vars:
-#        var1: value1
-#        var2: value2
+  vars:
+    playbook_list:
+      - app_docker.yml
+
+  tasks:
+    - name: Import each playbook
+      import_playbook: "{{ item }}"
+      with_items: "{{ playbook_list }}"
