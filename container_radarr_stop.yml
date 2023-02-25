@@ -1,12 +1,8 @@
----
-- name: Remove Radarr container and image
-  hosts: all
-  become: true
-  tasks:
     - name: Stop Radarr container
       docker_container:
         name: radarr
         state: stopped
+        container_default_behavior: "no_defaults"
 
     - name: Remove Radarr container
       docker_container:
