@@ -1,35 +1,8 @@
 ---
-- name: Install Docker and Docker Swarm
+- name: Setup Docker Swarm
   hosts: all
   become: true
   tasks:
-    - name: Install prerequisites
-      apt:
-        name: "{{ packages }}"
-        state: present
-      vars:
-        packages:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg2
-          - software-properties-common
-
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
-        state: present
-
-    - name: Install Docker CE
-      apt:
-        name: docker-ce
-        state: present
-
     - name: Initialize Docker Swarm
       command: docker swarm init --advertise-addr {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
       register: swarm_init

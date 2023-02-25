@@ -1,5 +1,5 @@
 ---
-- name: Install Docker and Docker Swarm
+- name: Install Docker
   hosts: all
   become: true
   tasks:
