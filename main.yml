@@ -1,12 +1,11 @@
----
+  GNU nano 6.2                                            main.yml                                                      ---
 - name: Run multiple playbooks
   hosts: all
 
-  vars:
-    playbook_list:
-      - app_docker.yml
-
   tasks:
-    - name: Import each playbook
-      import_playbook: "{{ item }}"
-      with_items: "{{ playbook_list }}"
+    - name: Import tasks from playbook1.yml
+      become: true
+      import_tasks: app_docker.yml
+    - name: Import tasks from playbook2.yml
+      become: true
+      import_tasks: container_radarr_start.yml

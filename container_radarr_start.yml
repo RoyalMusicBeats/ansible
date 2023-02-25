@@ -1,24 +1,22 @@
----
-- name: Deploy Radarr container
-  hosts: all
-  become: true
-  tasks:
-   - name: Pull Radarr container image
+    - name: Pull Radarr container image
       docker_image:
         name: linuxserver/radarr
         tag: latest
+        source: pull
 
     - name: Create Radarr container
       docker_container:
         name: radarr
         image: linuxserver/radarr
-        restart_policy: always
+        state: started
+        recreate: yes
+        container_default_behavior: "no_defaults"
         ports:
           - "7878:7878"
         volumes:
-          - "/opt/radarr:/config"
+          - "/mnt/radarr:/config"
           - "/mnt/movies:/movies"
-        environment:
-          - PUID=1000
-          - PGID=1000
-          - TZ=Europe/London
+        env:
+            PUID: "1000"
+            PGID: "1000"
+            TZ: Europe/Amsterdam
