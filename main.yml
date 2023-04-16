@@ -5,6 +5,7 @@
     - name: Install Docker
       become: true
       import_tasks: app_docker.yml
+      
     - name: Setup Swarm
       become: true
       import_tasks: setup_docker-swarm.yml
