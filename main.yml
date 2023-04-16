@@ -1,4 +1,5 @@
 - name: install docker
   hosts: docker-nodes
+  become: yes
   roles:
     - docker-installation
