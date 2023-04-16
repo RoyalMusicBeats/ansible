@@ -4,3 +4,8 @@ vm02
 
 [swarm_worker]
 vm03
+
+[docker-nodes]
+vm01
+vm02
+vm03
