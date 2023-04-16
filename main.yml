@@ -3,3 +3,8 @@
   become: yes
   roles:
     - docker-installation
+- name: start Radarr
+  hosts: container-radarr-start
+  become: yes
+  roles:
+    - container-radarr-start
