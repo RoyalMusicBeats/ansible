@@ -1,11 +1,4 @@
-- name: Run multiple playbooks
-  hosts: all
-
-  tasks:
-    - name: Install Docker
-      become: true
-      import_tasks: app_docker.yml
-      
-    - name: Setup Swarm
-      become: true
-      import_tasks: setup_docker-swarm.yml
+- name: install docker
+  hosts: docker-nodes
+  roles:
+    - docker-installation
