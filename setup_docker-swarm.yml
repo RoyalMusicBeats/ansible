@@ -3,24 +3,13 @@
   hosts: all
   become: true
   tasks:
-    - name: Initialize Docker Swarm
-      command: docker swarm init --advertise-addr {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
-      register: swarm_init
-      when: "'swarm_manager' in group_names"
-
-    - name: Save manager join command
-      set_fact:
-        manager_join_command: "{{ swarm_init.stdout_lines[0] }}"
-      when: "'swarm_manager' in group_names"
-
-- name: Join nodes to Docker Swarm
-  hosts: swarm_nodes
-  become: true
-  tasks:
-    - name: Join node to Swarm as manager
-      command: "{{ hostvars[groups['swarm_managers'][0]]['manager_join_command'] }}"
-      when: "'swarm_manager' not in group_names"
-
-    - name: Join node to Swarm as worker
-      command: "{{ hostvars[groups['swarm_workers'][0]]['worker_join_command'] }}"
-      when: "'swarm_worker' not in group_names"
+    - name: Init a new swarm with default parameters
+      docker_swarm:
+        state: present
+        
+    - name: Add nodes
+      docker_swarm:
+        state: join
+        advertise_addr: 192.168.1.2
+        join_token: SWMTKN-1--xxxxx
+        remote_addrs: [ 'vm01:2377' ]

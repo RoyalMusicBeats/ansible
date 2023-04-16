@@ -2,9 +2,9 @@
   hosts: all
 
   tasks:
-    - name: Import tasks from playbook1.yml
+    - name: Install Docker
       become: true
       import_tasks: app_docker.yml
-    - name: Import tasks from playbook2.yml
+    - name: Setup Swarm
       become: true
       import_tasks: container_radarr_start.yml
