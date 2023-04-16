@@ -7,4 +7,4 @@
       import_tasks: app_docker.yml
     - name: Setup Swarm
       become: true
-      import_tasks: container_radarr_start.yml
+      import_tasks: setup_docker-swarm.yml
