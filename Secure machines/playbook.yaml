@@ -8,9 +8,6 @@
       apt:
         name: ufw
         state: present
-    - name: Reload firewall
-      ufw:
-        state: reloaded
     - name: Open SSH port
       ufw:
         rule: allow
@@ -23,6 +20,9 @@
       ufw:
         rule: allow
         port: https
+    - name: Reload firewall
+      ufw:
+        state: reloaded
     - name: Turn on firewall
       ufw:
         state: enabled
@@ -52,26 +52,21 @@
     - name: Disable root user
       command: usermod -p '!' root
 
-    - name: Delete rsc user
+    # Create rsc user and add to sudo group
+    - name: Create rsc user
       user:
         name: rsc
-        state: absent
-
-    # Create break-glass user and add to sudo group
-    - name: Create break-glass user
-      user:
-        name: break-glass
         state: present
         append: yes
         groups: sudo
         shell: /bin/bash
         
-    # Create home folder for break-glass user
-    - name: Create home folder for break-glass user
+    # Create home folder for rsc user
+    - name: Create home folder for rsc user
       file:
-        path: /home/break-glass
+        path: /home/rsc
         state: directory
-        owner: break-glass
-        group: break-glass
+        owner: rsc
+        group: rsc
         mode: '0755'
 
