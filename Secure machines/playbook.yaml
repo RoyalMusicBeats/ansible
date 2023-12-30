@@ -64,6 +64,8 @@
         state: present
         append: yes
         groups: sudo
+        shell: /bin/bash
+        
     # Create home folder for break-glass user
     - name: Create home folder for break-glass user
       file:
