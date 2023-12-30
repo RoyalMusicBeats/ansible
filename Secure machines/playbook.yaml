@@ -70,3 +70,28 @@
         group: rsc
         mode: '0755'
 
+    # Add authorized key for rsc user
+    - name: Add authorized key for rsc user
+      authorized_key:
+        user: rsc
+        key: "{{ lookup('file', '/path/to/authorized_key.pub') }}"
+        state: present
+
+    - name: Install Fail2ban
+      apt:
+        name: fail2ban
+        state: presentop
+    - name: Configure Fail2ban
+      template:
+        src: fail2ban.j2
+        dest: /etc/fail2ban/jail.local
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart fail2ban
+    - name: Enable and start Fail2ban
+      systemd:
+        name: fail2ban
+        state: started
+        enabled: yes
+
