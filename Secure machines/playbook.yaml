@@ -27,11 +27,23 @@
       ufw:
         state: enabled
 
+    # Disable PermitRootLogin
     - name: Configure SSH login
       lineinfile:
         path: /etc/ssh/sshd_config
         regexp: '^#?PermitRootLogin'
         line: 'PermitRootLogin no'
+        state: present
+        backup: yes
+        validate: 'sshd -t'
+        notify: restart sshd
+
+    # Disable PasswordAuthentication
+    - name: Disable PasswordAuthentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
         state: present
         backup: yes
         validate: 'sshd -t'
@@ -45,7 +57,7 @@
         name: rsc
         state: absent
 
-    # Create break-glass user
+    # Create break-glass user and add to sudo group
     - name: Create break-glass user
       user:
         name: break-glass
@@ -60,3 +72,4 @@
         owner: break-glass
         group: break-glass
         mode: '0755'
+
