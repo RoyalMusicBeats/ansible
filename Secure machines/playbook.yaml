@@ -1,6 +1,8 @@
 - name: Secure Machines
-  hosts: all
+  hosts: hosts
   become: true
+  become_user: root
+  remote_user: ansible
 
   tasks:
     # Install and configure UFW
