@@ -8,18 +8,18 @@
     # Ping the host to check connectivity
     - name: Ping host
       ping:  # Ensure the host is reachable
-    
-    # Update, upgrade, and dist upgrade all machines
-    - name: Update, Upgrade, and Dist Upgrade
-      apt:
-        upgrade: dist
-        update_cache: yes
-        cache_valid_time: 3600
-
-    # Reboot the machine
-    - name: Reboot machine
-      reboot:
-        reboot_timeout: 300
-        pre_reboot_delay: 0
-        post_reboot_delay: 0
-        test_command: uptime > /dev/null
+#    
+#    # Update, upgrade, and dist upgrade all machines
+#    - name: Update, Upgrade, and Dist Upgrade
+#      apt:
+#        upgrade: dist
+#        update_cache: yes
+#        cache_valid_time: 3600
+#
+#    # Reboot the machine
+#    - name: Reboot machine
+#      reboot:
+#        reboot_timeout: 300
+#        pre_reboot_delay: 0
+#        post_reboot_delay: 0
+#        test_command: uptime > /dev/null
