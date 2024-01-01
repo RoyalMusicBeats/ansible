@@ -1,6 +1,9 @@
-[hosts]
+[k3s]
 k3s-ms-prod-docn-001  ansible_host=100.83.188.12
 k3s-ms-prod-boz-001   ansible_host=100.106.15.115
 k3s-ms-prod-boz-002   ansible_host=100.67.198.62
 k3s-wk-prod-boz-001   ansible_host=100.105.35.83
 k3s-wk-prod-boz-002   ansible_host=100.98.48.132
+
+[gpu]
+gpu-docker-prod-boz-001  ansible_host=100.116.163.116
