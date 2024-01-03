@@ -7,14 +7,14 @@
   tasks:
 
   # Disable IPv4
-  - name: Disable IPv4
-    sysctl:
-      name: net.ipv4.conf.all.disable_ipv4
-      value: 1
-      state: present
-      sysctl_set: yes
-    notify:
-      - Restart Network
+    - name: Disable IPv4
+      sysctl:
+        name: net.ipv4.conf.all.disable_ipv4
+        value: 1
+        state: present
+        sysctl_set: yes
+      notify:
+        - Restart Network
   
     # Install and configure UFW
     - name: Install UFW
