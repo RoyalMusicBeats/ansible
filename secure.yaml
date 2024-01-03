@@ -33,7 +33,7 @@
     - name: Reload firewall
       ufw:
         state: reloaded
-        
+
     - name: Turn on firewall
       ufw:
         state: enabled
@@ -100,12 +100,12 @@
         group: rsc
         mode: '0755'
 
-#    # Add authorized key for rsc user
-#    - name: Add authorized key for rsc user
-#      authorized_key:
-#        user: rsc
-#        key: "{{ lookup('file', '/path/to/authorized_key.pub') }}"
-#        state: present
+    # Add authorized key for rsc user
+    - name: Add authorized key for rsc user
+      authorized_key:
+        user: rsc
+        key: "{{ lookup('file', 'authorized_key.pub') }}"
+        state: present
 
 #    - name: Install Fail2ban
 #      apt:
