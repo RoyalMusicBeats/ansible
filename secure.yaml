@@ -37,7 +37,7 @@
         line: 'PermitRootLogin no'
         state: present
         backup: yes
-        validate: 'sshd -t'
+        validate: 'sshd -t %s'
 
     # Disable PasswordAuthentication
     - name: Disable PasswordAuthentication
