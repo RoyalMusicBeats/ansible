@@ -78,7 +78,7 @@
     - name: Install Fail2ban
       apt:
         name: fail2ban
-        state: presentop
+        state: present
     - name: Configure Fail2ban
       template:
         src: fail2ban.j2
