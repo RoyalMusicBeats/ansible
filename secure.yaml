@@ -5,6 +5,17 @@
   remote_user: ansible
 
   tasks:
+
+  # Disable IPv4
+  - name: Disable IPv4
+    sysctl:
+      name: net.ipv4.conf.all.disable_ipv4
+      value: 1
+      state: present
+      sysctl_set: yes
+    notify:
+      - Restart Network
+  
     # Install and configure UFW
     - name: Install UFW
       apt:
@@ -136,4 +147,9 @@
     - name: Restart SSH
       service:
         name: sshd
+        state: restarted
+
+    - name: Restart network
+      service:
+        name: network
         state: restarted
