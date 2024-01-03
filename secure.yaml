@@ -37,7 +37,9 @@
         line: "PermitRootLogin no"
         state: present
         backup: yes
-        
+      notify:
+        - Restart SSH  
+
     # Disable PasswordAuthentication
     - name: Disable PasswordAuthentication
       lineinfile:
@@ -46,6 +48,8 @@
         line: 'PasswordAuthentication no'
         state: present
         backup: yes
+      notify:
+        - Restart SSH  
 
     - name: Disable root user
       command: usermod -p '!' root
@@ -100,3 +104,8 @@
         state: started
         enabled: yes
 
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
