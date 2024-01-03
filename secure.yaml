@@ -30,14 +30,14 @@
         state: enabled
 
     # Disable PermitRootLogin
-   - name: Disable PermitRootLogin
-     lineinfile:
+    - name: Disable PermitRootLogin
+      lineinfile:
         dest: /etc/ssh/sshd_config
         regexp: '^PermitRootLogin'
         line: "PermitRootLogin no"
         state: present
         backup: yes
-     notify:
+      notify:
        - restart ssh
         
     # Disable PasswordAuthentication
