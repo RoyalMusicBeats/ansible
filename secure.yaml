@@ -38,18 +38,29 @@
         state: present
         backup: yes
       notify:
-        - Restart SSH  
+        - Restart SSH
 
     # Disable PasswordAuthentication
     - name: Disable PasswordAuthentication
       lineinfile:
-        path: /etc/ssh/sshd_config
+        dest: /etc/ssh/sshd_config
         regexp: '^PasswordAuthentication'
         line: 'PasswordAuthentication no'
         state: present
         backup: yes
       notify:
-        - Restart SSH  
+        - Restart SSH
+
+    # Disable ChallengeResponseAuthentication
+    - name: Disable ChallengeResponseAuthentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^ChallengeResponseAuthentication'
+        line: 'ChallengeResponseAuthentication no'
+        state: present
+        backup: yes
+      notify:
+        - Restart SSH
 
     - name: Disable root user
       command: usermod -p '!' root
