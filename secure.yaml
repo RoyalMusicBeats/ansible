@@ -18,6 +18,13 @@
       ufw:
         rule: deny
         port: telnet
+
+    - name: Deny incoming ping
+      ufw:
+        rule: deny
+        proto: icmp
+
+
     - name: Open HTTP port
       ufw:
         rule: allow
