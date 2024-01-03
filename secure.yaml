@@ -80,6 +80,12 @@
         name: fail2ban
         state: present
 
+    - name: Unable and stop Fail2ban
+      systemd:
+        name: fail2ban
+        state: stopped
+        enabled: no
+
     - name: Configure Fail2ban
       template:
         src: fail2ban.j2
@@ -87,9 +93,10 @@
         owner: root
         group: root
         mode: '0644'
-        
+
     - name: Enable and start Fail2ban
       systemd:
         name: fail2ban
         state: started
         enabled: yes
+
