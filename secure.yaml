@@ -10,6 +10,11 @@
       apt:
         name: ufw
         state: present
+
+    - name: Disable UFW
+      ufw:
+        state: disabled
+
     - name: Open SSH port
       ufw:
         rule: allow
