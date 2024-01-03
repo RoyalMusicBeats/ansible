@@ -1,5 +1,5 @@
 - name: Secure Machines
-  hosts: hosts
+  hosts: test
   become: true
   become_user: root
   remote_user: ansible

@@ -7,3 +7,6 @@ k3s-wk-prod-boz-002   ansible_host=100.98.48.132
 
 [gpu]
 gpu-docker-prod-boz-001  ansible_host=100.116.163.116
+
+[test]
+test  ansible_host=100.120.231.115
