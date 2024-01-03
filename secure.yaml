@@ -62,6 +62,14 @@
       notify:
         - Restart SSH
 
+    # Remove 50-cloud-init.conf
+    - name: Remove 50-cloud-init.conf
+      file:
+        path: /etc/ssh/sshd_config.d/50-cloud-init.conf
+        state: absent
+      notify:
+        - Restart SSH
+
     - name: Disable root user
       command: usermod -p '!' root
 
