@@ -30,15 +30,17 @@
         state: enabled
 
     # Disable PermitRootLogin
-    - name: Configure SSH login
-      lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^#?PermitRootLogin'
-        line: 'PermitRootLogin no'
+   tasks:
+   - name: Enable Root Login
+     lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        line: "PermitRootLogin no"
         state: present
         backup: yes
-        validate: 'sshd -t %s'
-
+     notify:
+       - restart ssh
+        
     # Disable PasswordAuthentication
     - name: Disable PasswordAuthentication
       lineinfile:
@@ -96,3 +98,8 @@
         state: started
         enabled: yes
 
+   handlers:
+   - name: restart ssh
+     systemctl:
+       name: sshd
+       state: restarted
