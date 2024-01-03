@@ -30,8 +30,7 @@
         state: enabled
 
     # Disable PermitRootLogin
-   tasks:
-   - name: Enable Root Login
+   - name: Disable PermitRootLogin
      lineinfile:
         dest: /etc/ssh/sshd_config
         regexp: '^PermitRootLogin'
