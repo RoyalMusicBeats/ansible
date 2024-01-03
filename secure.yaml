@@ -97,7 +97,7 @@
         state: started
         enabled: yes
 
-   handlers:
+  handlers:
     - name: restart ssh
       systemctl:
         name: sshd
