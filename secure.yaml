@@ -106,6 +106,6 @@
 
   handlers:
     - name: Restart SSH
-      service:
-        name: ssh
+      systemctl:
+        name: sshd
         state: restarted
