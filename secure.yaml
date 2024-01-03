@@ -19,28 +19,21 @@
       ufw:
         rule: allow
         port: ssh
-    - name: Deny Telnet connections
-      ufw:
-        rule: deny
-        port: telnet
-
-    - name: Deny incoming ping
-      ufw:
-        rule: deny
-        proto: icmp
-
 
     - name: Open HTTP port
       ufw:
         rule: allow
         port: http
+
     - name: Open HTTPS port
       ufw:
         rule: allow
         port: https
+
     - name: Reload firewall
       ufw:
         state: reloaded
+        
     - name: Turn on firewall
       ufw:
         state: enabled
