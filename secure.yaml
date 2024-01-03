@@ -42,12 +42,10 @@
     - name: Disable PasswordAuthentication
       lineinfile:
         path: /etc/ssh/sshd_config
-        regexp: '^#?PasswordAuthentication'
+        regexp: '^PasswordAuthentication'
         line: 'PasswordAuthentication no'
         state: present
         backup: yes
-        validate: 'sshd -t'
-        notify: restart sshd
 
     - name: Disable root user
       command: usermod -p '!' root
