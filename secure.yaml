@@ -6,7 +6,7 @@
 
   tasks:
   
-  # Disable IPv6
+    # Disable IPv6
     - name: Disable IPv6
       sysctl:
         name: net.ipv6.conf.all.disable_ipv6
