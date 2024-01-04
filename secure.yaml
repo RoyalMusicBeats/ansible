@@ -151,5 +151,8 @@
 
     - name: Restart network
       service:
-        name: network
+        name: systemd-networkd
         state: restarted
+      async: 120
+      poll: 0
+      register: net_restarting
