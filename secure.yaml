@@ -26,6 +26,10 @@
       ufw:
         state: disabled
 
+    - name: Reset UFW
+      ufw:
+        state: reset
+
     - name: Open SSH port
       ufw:
         rule: allow
