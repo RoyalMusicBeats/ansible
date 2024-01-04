@@ -127,7 +127,7 @@
 #        name: fail2ban
 #        state: present
 #
-#    - name: Unable and stop Fail2ban
+#    - name: stop Fail2ban
 #      systemd:
 #        name: fail2ban
 #        state: stopped
