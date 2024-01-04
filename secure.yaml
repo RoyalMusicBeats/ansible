@@ -94,6 +94,7 @@
       notify:
         - Restart SSH
 
+    # Remove Disable root user
     - name: Disable root user
       command: usermod -p '!' root
 
