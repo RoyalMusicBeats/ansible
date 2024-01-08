@@ -123,17 +123,17 @@
         key: "{{ lookup('file', 'authorized_key.pub') }}"
         state: present
 
-#    - name: Install Fail2ban
-#      apt:
-#        name: fail2ban
-#        state: present
-#
-#    - name: stop Fail2ban
-#      systemd:
-#        name: fail2ban
-#        state: stopped
-#        enabled: no
-#
+   - name: Install Fail2ban
+     apt:
+       name: fail2ban
+       state: present
+
+   - name: stop Fail2ban
+     systemd:
+       name: fail2ban
+       state: stopped
+       enabled: no
+
 #    - name: Configure Fail2ban
 #      template:
 #        src: "{{ lookup('file', 'jail.local') }}"
@@ -142,11 +142,11 @@
 #        group: root
 #        mode: '0644'
 #
-#    - name: Enable and start Fail2ban
-#      systemd:
-#        name: fail2ban
-#        state: started
-#        enabled: yes
+    - name: Enable and start Fail2ban
+      systemd:
+        name: fail2ban
+        state: started
+        enabled: yes
 
   handlers:
     - name: Restart SSH
