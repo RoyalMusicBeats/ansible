@@ -123,6 +123,19 @@
         key: "{{ lookup('file', 'authorized_key.pub') }}"
         state: present
 
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+    
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+
   handlers:
     - name: Restart SSH
       service:
