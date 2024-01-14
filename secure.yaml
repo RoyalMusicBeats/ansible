@@ -128,12 +128,20 @@
       apt:
         name: docker.io
         state: present
-    
+
     - name: Start Docker service
       service:
         name: docker
         state: started
         enabled: yes
+    
+    # Install Docker Compose
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+
 
 
   handlers:
