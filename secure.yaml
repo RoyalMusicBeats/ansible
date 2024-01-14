@@ -45,6 +45,17 @@
         rule: allow
         port: https
 
+    - name: Open port 8086
+      ufw:
+        rule: allow
+        port: 8086
+
+    - name: Open port 3000
+      ufw:
+        rule: allow
+        port: 3000
+
+
     - name: Reload firewall
       ufw:
         state: reloaded

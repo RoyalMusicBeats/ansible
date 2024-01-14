@@ -1,0 +1,44 @@
+version: '3'
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.2
+
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.3
+
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - /home/rsc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+    networks:
+      mynetwork:
+        ipv4_address: 192.168.0.4
+
+volumes:
+  grafana_data:
+  influxdb_data:
+
+networks:
+  mynetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1
+          ip_range: 192.168.0.2/29
