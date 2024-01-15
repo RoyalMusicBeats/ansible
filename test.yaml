@@ -5,7 +5,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana_data:/var/lib/grafana
+      - /home/rsc/docker/grafana_data:/var/lib/grafana
+    user: "0"
     networks:
       mynetwork:
         ipv4_address: 192.168.0.2
@@ -15,7 +16,9 @@ services:
     ports:
       - 8086:8086
     volumes:
-      - influxdb_data:/var/lib/influxdb
+      - /home/rsc/docker/influxdb_lib_data:/var/lib/influxdb
+      - /home/rsc/docker/influxdb2_lib_data:/var/lib/influxdb2	
+      - /home/rsc/docker/influxdb2_data:/etc/influxdb2
     networks:
       mynetwork:
         ipv4_address: 192.168.0.3
@@ -23,16 +26,14 @@ services:
   telegraf:
     image: telegraf:latest
     volumes:
-      - /home/rsc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /home/rsc/docker/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: rsc:119
     depends_on:
       - influxdb
     networks:
       mynetwork:
         ipv4_address: 192.168.0.4
-
-volumes:
-  grafana_data:
-  influxdb_data:
 
 networks:
   mynetwork:

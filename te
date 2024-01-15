@@ -7,13 +7,13 @@
   flush_interval = "10s"
   flush_jitter = "0s"
   precision = ""
-  hostname = ""
+  hostname = "test"
   omit_hostname = false
 
 [[outputs.influxdb_v2]]
   urls = ["http://192.168.0.3:8086"]
-  token = "YOUR TELEGRAF READ/WRITE TOKEN"
-  organization = "YOUR ORG NAME"
+  token = "01oPGY83VUNXYAOAMX9B5KPlCbwAi_BWsg9A2stQxH-14kueP-Ic9XFisdLUsEsxJCOq5P71ytq-O_l_b-iG4g=="
+  organization = "home"
   bucket = "telegraf"
 
 [[inputs.cpu]]
@@ -29,3 +29,164 @@
 [[inputs.processes]]
 [[inputs.swap]]
 [[inputs.system]]
+# Read metrics about docker containers
+[[inputs.docker]]
+  ## Docker Endpoint
+  ##   To use TCP, set endpoint = "tcp://[ip]:[port]"
+  ##   To use environment variables (ie, docker-machine), set endpoint = "ENV"
+  endpoint = "unix:///var/run/docker.sock"
+
+  ## Set to true to collect Swarm metrics(desired_replicas, running_replicas)
+  ## Note: configure this in one of the manager nodes in a Swarm cluster.
+  ## configuring in multiple Swarm managers results in duplication of metrics.
+  gather_services = false
+
+  ## Only collect metrics for these containers. Values will be appended to
+  ## container_name_include.
+  ## Deprecated (1.4.0), use container_name_include
+  container_names = []
+
+  ## Set the source tag for the metrics to the container ID hostname, eg first 12 chars
+  source_tag = false
+
+  ## Containers to include and exclude. Collect all if empty. Globs accepted.
+  container_name_include = []
+  container_name_exclude = []
+
+  ## Container states to include and exclude. Globs accepted.
+  ## When empty only containers in the "running" state will be captured.
+  ## example: container_state_include = ["created", "restarting", "running", "removing", "paused", "exited", "dead"]
+  ## example: container_state_exclude = ["created", "restarting", "running", "removing", "paused", "exited", "dead"]
+  # container_state_include = []
+  # container_state_exclude = []
+
+  ## Objects to include for disk usage query
+  ## Allowed values are "container", "image", "volume" 
+  ## When empty disk usage is excluded
+  storage_objects = []
+
+  ## Timeout for docker list, info, and stats commands
+  timeout = "5s"
+
+  ## Whether to report for each container per-device blkio (8:0, 8:1...),
+  ## network (eth0, eth1, ...) and cpu (cpu0, cpu1, ...) stats or not.
+  ## Usage of this setting is discouraged since it will be deprecated in favor of 'perdevice_include'.
+  ## Default value is 'true' for backwards compatibility, please set it to 'false' so that 'perdevice_include' setting
+  ## is honored.
+  perdevice = true
+
+  ## Specifies for which classes a per-device metric should be issued
+  ## Possible values are 'cpu' (cpu0, cpu1, ...), 'blkio' (8:0, 8:1, ...) and 'network' (eth0, eth1, ...)
+  ## Please note that this setting has no effect if 'perdevice' is set to 'true'
+  # perdevice_include = ["cpu"]
+
+  ## Whether to report for each container total blkio and network stats or not.
+  ## Usage of this setting is discouraged since it will be deprecated in favor of 'total_include'.
+  ## Default value is 'false' for backwards compatibility, please set it to 'true' so that 'total_include' setting
+  ## is honored.
+  total = false
+
+  ## Specifies for which classes a total metric should be issued. Total is an aggregated of the 'perdevice' values.
+  ## Possible values are 'cpu', 'blkio' and 'network'
+  ## Total 'cpu' is reported directly by Docker daemon, and 'network' and 'blkio' totals are aggregated by this plugin.
+  ## Please note that this setting has no effect if 'total' is set to 'false'
+  # total_include = ["cpu", "blkio", "network"]
+
+  ## docker labels to include and exclude as tags.  Globs accepted.
+  ## Note that an empty array for both will include all labels as tags
+  docker_label_include = []
+  docker_label_exclude = []
+
+  ## Which environment variables should we use as a tag
+  tag_env = ["JAVA_HOME", "HEAP_SIZE"]
+
+  ## Optional TLS Config
+  # tls_ca = "/etc/telegraf/ca.pem"
+  # tls_cert = "/etc/telegraf/cert.pem"
+  # tls_key = "/etc/telegraf/key.pem"
+  ## Use TLS but skip chain & host verification
+  # insecure_skip_verify = false
+
+# Retrieves SNMP values from remote agents
+[[inputs.snmp]]
+  ## Agent addresses to retrieve values from.
+  ##   format:  agents = ["<scheme://><hostname>:<port>"]
+  ##   scheme:  optional, either udp, udp4, udp6, tcp, tcp4, tcp6.
+  ##            default is udp
+  ##   port:    optional
+  ##   example: agents = ["udp://127.0.0.1:161"]
+  ##            agents = ["tcp://127.0.0.1:161"]
+  ##            agents = ["udp4://v4only-snmp-agent"]
+  agents = ["udp://10.0.0.254:161"]
+
+  ## Timeout for each request.
+  # timeout = "5s"
+
+  ## SNMP version; can be 1, 2, or 3.
+  # version = 2
+
+  ## Unconnected UDP socket
+  ## When true, SNMP responses are accepted from any address not just
+  ## the requested address. This can be useful when gathering from
+  ## redundant/failover systems.
+  # unconnected_udp_socket = false
+
+  ## Path to mib files
+  ## Used by the gosmi translator.
+  ## To add paths when translating with netsnmp, use the MIBDIRS environment variable
+  # path = ["/usr/share/snmp/mibs"]
+
+  ## SNMP community string.
+  # community = "public"
+
+  ## Agent host tag; should be set to "source" for consistent usage across plugins
+  ##   example: agent_host_tag = "source"
+  # agent_host_tag = "agent_host"
+
+  ## Number of retries to attempt.
+  # retries = 3
+
+  ## The GETBULK max-repetitions parameter.
+  # max_repetitions = 10
+
+  ## SNMPv3 authentication and encryption options.
+  ##
+  ## Security Name.
+  sec_name = "GPe2v6laz5AezP5GJiCT"
+  ## Authentication protocol; one of "MD5", "SHA", "SHA224", "SHA256", "SHA384", "SHA512" or "".
+  auth_protocol = "MD5"
+  ## Authentication password.
+  auth_password = "FeqgjuE3gqbBAAxWhR0v"
+  ## Security Level; one of "noAuthNoPriv", "authNoPriv", or "authPriv".
+  sec_level = "authNoPriv"
+  ## Context Name.
+  # context_name = ""
+  ## Privacy protocol used for encrypted messages; one of "DES", "AES", "AES192", "AES192C", "AES256", "AES256C", or "".
+  ### Protocols "AES192", "AES192", "AES256", and "AES256C" require the underlying net-snmp tools
+  ### to be compiled with --enable-blumenthal-aes (http://www.net-snmp.org/docs/INSTALL.html)
+  # priv_protocol = ""
+  ## Privacy password used for encrypted messages.
+  # priv_password = ""
+
+  ## Add fields and tables defining the variables you wish to collect.  This
+  ## example collects the system uptime and interface variables.  Reference the
+  ## full plugin documentation for configuration details.
+  [[inputs.snmp.field]]
+    oid = "RFC1213-MIB::sysUpTime.0"
+    name = "sysUptime"
+    conversion = "float(2)"
+
+  [[inputs.snmp.field]]
+    oid = "RFC1213-MIB::sysName.0"
+    name = "sysName"
+    is_tag = true
+
+  [[inputs.snmp.table]]
+    oid = "IF-MIB::ifTable"
+    name = "interface"
+    inherit_tags = ["sysName"]
+
+    [[inputs.snmp.table.field]]
+      oid = "IF-MIB::ifDescr"
+      name = "ifDescr"
+      is_tag = true
